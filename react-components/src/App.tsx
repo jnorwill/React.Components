@@ -11,14 +11,14 @@ class App extends Component {
   }
   submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${this.state.search}`, {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${this.state.search}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
       }
     });
 
-    let result = await response.json();
+    const result = await response.json();
 
     this.setState({
       output: {
