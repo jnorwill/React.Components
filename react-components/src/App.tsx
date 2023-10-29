@@ -2,6 +2,7 @@ import { Component, ReactNode } from 'react'
 
 import './App.css'
 import Output from './components/Output.tsx'
+import WholeList from './components/WholeList.tsx'
 
 class App extends Component {
   state = {
@@ -42,7 +43,7 @@ class App extends Component {
         </div>
         <div className='output'>
           {
-            this.state.search ? <Output dataOutput={this.state.output} /> : <div></div>
+            this.state.search ? <Output dataOutput={this.state.output} /> : <WholeList />
           }
         </div>
       </div>
