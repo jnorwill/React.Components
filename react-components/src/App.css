@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+}
+
+.search,
+.output {
+  width: 100vw;
+}
+
+.search {
+  height: 100px;
+  background-color: rgb(255, 201, 201);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  display: flex;
+  width: 50%;
+}
+
+.input {
+  width: 100%;
+}
+
+.output {
+  height: 100%;
+  background-color: rgb(230, 204, 255);
+}
