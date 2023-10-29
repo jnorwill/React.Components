@@ -6,7 +6,7 @@ import WholeList from './components/WholeList.tsx'
 
 class App extends Component {
   state = {
-    search: '',
+    search: localStorage.getItem('searchValue') || '',
     output: null
   }
   submit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -19,7 +19,6 @@ class App extends Component {
     });
 
     let result = await response.json();
-    console.log(result);
 
     this.setState({
       output: {
@@ -35,9 +34,11 @@ class App extends Component {
       <div className='wrapper'>
         <div className='search'>
           <form className='form' onSubmit={this.submit} >
-            <input className='input' type="text" value={this.state.search} onChange={(event) => this.setState({
-              search: event?.target?.value || ''
-            })} />
+            <input className='input' type="text" value={this.state.search} onChange={(event) => {
+              const value = event?.target?.value || ''
+              localStorage.setItem('searchValue', value)
+              this.setState({ search: value })
+            }} />
             <input type="submit" />
           </form>
         </div>

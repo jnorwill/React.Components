@@ -1,7 +1,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 
 }
 
@@ -28,6 +28,7 @@
 }
 
 .output {
+  flex-grow: 1;
   background-color: rgb(230, 204, 255);
 }
 

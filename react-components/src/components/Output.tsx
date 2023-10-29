@@ -6,21 +6,20 @@ interface ResultType {
 }
 
 interface MyComponentProps {
-  dataOutput: ({
+  dataOutput: {
     img: string;
     title: string;
-  }[]) | null
+  } | null;
 }
 class Output extends Component<MyComponentProps> {
   render(): ReactNode {
+    if (!this.props.dataOutput) return null
     return (
       <div>
-        {this.props.dataOutput?.map((item) => (
-          <div key={item.title} className='element'>
-            <img src={item.img} alt={item.title} />
-            <h2>{item.title}</h2>
-          </div>
-        ))}
+        <div key={this.props.dataOutput.title} className='element'>
+          <img src={this.props.dataOutput.img} alt={this.props.dataOutput.title} />
+          <h2>{this.props.dataOutput.title}</h2>
+        </div>
       </div>
     )
   }
