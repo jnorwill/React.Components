@@ -11,7 +11,7 @@
 }
 
 .search {
-  height: 100px;
+  padding: 50px;
   background-color: rgb(255, 201, 201);
   display: flex;
   align-items: center;
@@ -28,6 +28,11 @@
 }
 
 .output {
-  height: 100%;
   background-color: rgb(230, 204, 255);
+}
+
+.element {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
