@@ -1,55 +1,29 @@
-import { Component, ReactNode } from 'react';
+import { useState } from 'react';
 
 import './App.css';
-import Output from './components/Output.tsx';
-import WholeList from './components/WholeList.tsx';
 
-class App extends Component {
-  state = {
-    search: localStorage.getItem('searchValue') || '',
-    output: null,
-  };
-  submit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${this.state.search}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-    });
+import PokemonList from './components/PokemonList.tsx';
+import SearchForm from './components/SearchForm.tsx';
+import Pokemon from './components/Pokemon.tsx';
+type OutputType = {
+  img: string;
+  title: string;
+};
 
-    const result = await response.json();
-
-    this.setState({
-      output: {
-        img: result.sprites.front_default,
-        title: result.name,
-      },
-    });
+const App = () => {
+  const [pokemonInf, setPokemonInf] = useState<OutputType | null>(null);
+  const createOutput = (pokemonInf: OutputType | null) => {
+    setPokemonInf(pokemonInf);
   };
 
-  render(): ReactNode {
-    return (
-      <div className="wrapper">
-        <div className="search">
-          <form className="form" onSubmit={this.submit}>
-            <input
-              className="input"
-              type="text"
-              value={this.state.search}
-              onChange={(event) => {
-                const value = event?.target?.value || '';
-                localStorage.setItem('searchValue', value);
-                this.setState({ search: value });
-              }}
-            />
-            <input type="submit" />
-          </form>
-        </div>
-        <div className="output">{this.state.search ? <Output dataOutput={this.state.output} /> : <WholeList />}</div>
+  return (
+    <div className="wrapper">
+      <SearchForm create={createOutput} />
+      <div className="output">
+        {pokemonInf ? <Pokemon img={pokemonInf.img} title={pokemonInf.title} /> : <PokemonList />}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default App;

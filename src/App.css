@@ -8,6 +8,7 @@
 .search,
 .output {
   width: 100vw;
+  box-sizing: border-box;
 }
 
 .search {
