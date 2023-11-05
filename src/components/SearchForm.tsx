@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 type OutputType = {
+  id: number;
   img: string;
   title: string;
 };
 type ResponseType = {
+  id: number;
   sprites: { front_default: string };
   name: string;
 };
@@ -23,6 +25,7 @@ const SearchForm: React.FC<SearchProps> = ({ create }) => {
     });
     const result: ResponseType = await response.json();
     return {
+      id: result.id,
       img: result.sprites.front_default,
       title: result.name,
     };

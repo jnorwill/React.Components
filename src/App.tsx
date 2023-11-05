@@ -7,8 +7,10 @@ import PokemonList from './components/PokemonList.tsx';
 import SearchForm from './components/SearchForm.tsx';
 import Pokemon from './components/Pokemon.tsx';
 import Pagination from './components/Pagination.tsx';
+import Sidebar from './components/Sidebar.tsx';
 
 type OutputType = {
+  id: number;
   img: string;
   title: string;
 };
@@ -22,8 +24,9 @@ const App = () => {
   const createOutput = (pokemonInf: OutputType | null) => {
     setPokemonInf(pokemonInf);
   };
-  const [pageParams] = useSearchParams();
-  const offset = `${+(pageParams.get('page') || '') * 10 - 10}`;
+
+  const [searchParams] = useSearchParams();
+  const offset = `${+(searchParams.get('page') || '') * 10 - 10}`;
 
   const [pageInf, setPageInf] = useState<pageInfType>({ limit: '10', offset });
   const changePage = useCallback((pageInf: pageInfType) => {
@@ -40,11 +43,14 @@ const App = () => {
             <Route
               path="/"
               element={
-                pokemonInf ? (
-                  <Pokemon img={pokemonInf.img} title={pokemonInf.title} />
-                ) : (
-                  <PokemonList limit={pageInf.limit} offset={pageInf.offset} />
-                )
+                <div className="main">
+                  {pokemonInf ? (
+                    <Pokemon id={pokemonInf.id} img={pokemonInf.img} title={pokemonInf.title} />
+                  ) : (
+                    <PokemonList limit={pageInf.limit} offset={pageInf.offset} />
+                  )}
+                  <Sidebar />
+                </div>
               }
             />
           </Routes>

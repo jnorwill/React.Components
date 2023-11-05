@@ -11,7 +11,7 @@ type PageProps = {
 };
 
 const Pagination: React.FC<PageProps> = ({ change }) => {
-  const [pageParams, setPageParams] = useSearchParams({ page: '1' });
+  const [searchParams, setSearchParams] = useSearchParams({ page: '1' });
   const [limit, setLimit] = useState('10');
 
   const changePage = (newPage: string, limit: string) => {
@@ -24,15 +24,15 @@ const Pagination: React.FC<PageProps> = ({ change }) => {
   };
 
   const NextPrevChange = (step: number) => {
-    const newPage = `${+(pageParams.get('page') || '1') + step}`;
+    const newPage = `${+(searchParams.get('page') || '1') + step}`;
     if (+newPage >= 1) {
-      setPageParams({ page: newPage });
+      setSearchParams({ page: newPage });
       changePage(newPage, limit);
     }
   };
   const submitLimit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setPageParams({ page: '1' });
+    setSearchParams({ page: '1' });
     changePage('1', limit);
   };
 
@@ -50,10 +50,10 @@ const Pagination: React.FC<PageProps> = ({ change }) => {
         <input
           type="text"
           className="pagination__input"
-          value={pageParams.get('page') || ''}
+          value={searchParams.get('page') || ''}
           onChange={(e) => {
             const page = e?.target?.value;
-            setPageParams({ page });
+            setSearchParams({ page });
 
             changePage(page, limit);
           }}

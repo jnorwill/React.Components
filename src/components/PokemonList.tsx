@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Pokemon from './Pokemon.tsx';
 interface OutputType {
+  id: number;
   img: string;
   title: string;
 }
@@ -12,6 +13,7 @@ type ResponseListType = {
   results: PokemonListType[];
 };
 type ResponseType = {
+  id: number;
   sprites: { front_default: string };
   name: string;
 };
@@ -40,6 +42,7 @@ const PokemonList = ({ limit, offset }: { limit: string; offset: string }) => {
 
           const result: ResponseType = await response.json();
           return {
+            id: result.id,
             img: result.sprites.front_default,
             title: result.name,
           };
@@ -52,9 +55,9 @@ const PokemonList = ({ limit, offset }: { limit: string; offset: string }) => {
   }, [limit, offset]);
 
   return (
-    <div>
+    <div className="pokemon__list">
       {output.map((item: OutputType) => {
-        return <Pokemon key={item.title} img={item.img} title={item.title} />;
+        return <Pokemon key={item.id} id={item.id} img={item.img} title={item.title} />;
       })}
     </div>
   );
