@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { useSearchParams } from 'react-router-dom';
 
 type pageInfType = {
@@ -9,31 +11,43 @@ type PageProps = {
 };
 
 const Pagination: React.FC<PageProps> = ({ change }) => {
-  const [searchParams, setSearchParams] = useSearchParams({ page: '1' });
+  const [pageParams, setPageParams] = useSearchParams({ page: '1' });
+  const [limit, setLimit] = useState('10');
 
-  const changePage = (newPage: string) => {
-    const offset = +newPage * 10 - 10;
+  const changePage = (newPage: string, limit: string) => {
+    const offset = +newPage * +limit - +limit;
     const changePage = {
-      limit: '10',
+      limit: `${limit}`,
       offset: `${offset}`,
     };
     change(changePage);
   };
 
   const NextPrevChange = (step: number) => {
-    const newPage = `${+(searchParams.get('page') || '1') + step}`;
+    const newPage = `${+(pageParams.get('page') || '1') + step}`;
     if (+newPage >= 1 && +newPage <= 130) {
-      setSearchParams({ page: newPage });
-      changePage(newPage);
+      setPageParams({ page: newPage });
+      changePage(newPage, limit);
     }
+  };
+  const submitLimit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setPageParams({ page: '1' });
+    changePage('1', limit);
   };
 
   return (
     <>
-      <div className="pagination">
+      <form className="pagination" onSubmit={submitLimit}>
         <span className="pagination__text">Number of pokemon per page:</span>
-        <input className="pagination__input" type="text" value={10} readOnly />
-      </div>
+        <input
+          className="pagination__input"
+          type="text"
+          value={limit || ''}
+          onChange={(e) => setLimit(e?.target?.value)}
+        />
+        <input className="submit" type="submit" value="Apply" />
+      </form>
       <div className="pagination">
         <button className="pagination__button" onClick={() => NextPrevChange(-1)}>
           prev
@@ -41,12 +55,12 @@ const Pagination: React.FC<PageProps> = ({ change }) => {
         <input
           type="text"
           className="pagination__input"
-          value={searchParams.get('page') || ''}
+          value={pageParams.get('page') || ''}
           onChange={(e) => {
             const page = e?.target?.value;
-            setSearchParams({ page });
+            setPageParams({ page });
 
-            changePage(page);
+            changePage(page, limit);
           }}
         />
         <button className="pagination__button" onClick={() => NextPrevChange(1)}>
