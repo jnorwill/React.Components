@@ -25,7 +25,7 @@ const Pagination: React.FC<PageProps> = ({ change }) => {
 
   const NextPrevChange = (step: number) => {
     const newPage = `${+(pageParams.get('page') || '1') + step}`;
-    if (+newPage >= 1 && +newPage <= 130) {
+    if (+newPage >= 1) {
       setPageParams({ page: newPage });
       changePage(newPage, limit);
     }
@@ -38,15 +38,10 @@ const Pagination: React.FC<PageProps> = ({ change }) => {
 
   return (
     <>
-      <form className="pagination" onSubmit={submitLimit}>
-        <span className="pagination__text">Number of pokemon per page:</span>
-        <input
-          className="pagination__input"
-          type="text"
-          value={limit || ''}
-          onChange={(e) => setLimit(e?.target?.value)}
-        />
-        <input className="submit" type="submit" value="Apply" />
+      <form className="limit" onSubmit={submitLimit}>
+        <span className="limit__text">Number of pokemon per page:</span>
+        <input className="limit__input" type="text" value={limit || ''} onChange={(e) => setLimit(e?.target?.value)} />
+        <input className="limit__submit" type="submit" value="Apply" />
       </form>
       <div className="pagination">
         <button className="pagination__button" onClick={() => NextPrevChange(-1)}>

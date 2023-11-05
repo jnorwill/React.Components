@@ -39,27 +39,43 @@
   font-weight: 900;
 }
 
+
+.limit__text {
+  font-weight: 900;
+  color: #7b966a;
+  font-size: 12px;
+}
+
+
+.limit,
 .pagination {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 20px;
+  padding: 20px;
+  width: 50%;
+  margin: 0 auto;
+  border-radius: 12px;
+  background-color: #ffffff;
 }
 
-.pagination__text {
-  width: 124px;
-  font-weight: 900;
-  color: #7b966a;
-  font-size: 12px;
-  margin: 10px;
+.limit {
+  padding-bottom: 10px;
 }
 
+.pagination {
+  padding-top: 10px;
+}
+
+.limit__input,
 .pagination__input {
   width: 30px;
   text-align: center;
 }
 
-.submit,
+.search__submit,
+.limit__submit,
 .pagination__button {
   border-radius: 8px;
   border: 2px solid rgb(255, 250, 153);

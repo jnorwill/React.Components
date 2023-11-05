@@ -1,8 +1,8 @@
-const Pokemon = ({ ...props }) => {
+const Pokemon = ({ img, title }: { img: string; title: string }) => {
   return (
     <div className="pokemon">
-      {props.img ? <img src={props.img} alt={props.title} /> : null}
-      <h2 className="pokemon__name">{props.title}</h2>
+      {img ? <img src={img} alt={title} /> : null}
+      <h2 className="pokemon__name">{title}</h2>
     </div>
   );
 };

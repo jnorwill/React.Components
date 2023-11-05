@@ -3,24 +3,25 @@ type OutputType = {
   img: string;
   title: string;
 };
-
+type ResponseType = {
+  sprites: { front_default: string };
+  name: string;
+};
 type SearchProps = {
   create: (outputInf: OutputType | null) => void;
 };
 
 const SearchForm: React.FC<SearchProps> = ({ create }) => {
-  const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
+  const [searchValue, setSearchValue] = useState('');
 
-  const searchResponse = async (value: string) => {
+  const searchResponse: (value: string) => Promise<OutputType> = async (value: string) => {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${value}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
       },
     });
-
-    const result = await response.json();
-
+    const result: ResponseType = await response.json();
     return {
       img: result.sprites.front_default,
       title: result.name,
@@ -50,15 +51,14 @@ const SearchForm: React.FC<SearchProps> = ({ create }) => {
         <input
           className="search__input"
           type="text"
-          value={searchValue}
           placeholder="find the pokemon"
           onChange={(event) => {
-            const value = event?.target?.value || '';
-            localStorage.setItem('searchValue', value);
+            let value = event?.target?.value || '';
+            value = value.toLocaleLowerCase();
             setSearchValue(value);
           }}
         />
-        <input className="submit" type="submit" />
+        <input className="search__submit" type="submit" value="Search" />
       </form>
     </div>
   );

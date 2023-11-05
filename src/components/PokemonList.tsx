@@ -4,25 +4,31 @@ interface OutputType {
   img: string;
   title: string;
 }
-interface PokemonListType {
+type PokemonListType = {
   name: string;
   url: string;
-}
+};
+type ResponseListType = {
+  results: PokemonListType[];
+};
+type ResponseType = {
+  sprites: { front_default: string };
+  name: string;
+};
 
-const PokemonList = ({ ...props }) => {
+const PokemonList = ({ limit, offset }: { limit: string; offset: string }) => {
   const [output, setOutput] = useState<OutputType[]>([]);
 
   useEffect(() => {
     const fetchPokemonList = async () => {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${props.limit}&offset=${props.offset}`, {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
         },
       });
 
-      const resultList = await response.json();
-
+      const resultList: ResponseListType = await response.json();
       const newOutput: OutputType[] = await Promise.all(
         resultList.results.map(async (item: PokemonListType) => {
           const response = await fetch(`${item.url}`, {
@@ -32,7 +38,7 @@ const PokemonList = ({ ...props }) => {
             },
           });
 
-          const result = await response.json();
+          const result: ResponseType = await response.json();
           return {
             img: result.sprites.front_default,
             title: result.name,
@@ -43,7 +49,7 @@ const PokemonList = ({ ...props }) => {
       setOutput([...newOutput]);
     };
     fetchPokemonList();
-  }, [props.limit, props.offset]);
+  }, [limit, offset]);
 
   return (
     <div>
