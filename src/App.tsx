@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useSearchParams } from 'react-router-dom';
 
 import './App.css';
 
@@ -22,8 +22,10 @@ const App = () => {
   const createOutput = (pokemonInf: OutputType | null) => {
     setPokemonInf(pokemonInf);
   };
+  const [pageParams] = useSearchParams();
+  const offset = `${+(pageParams.get('page') || '') * 10 - 10}`;
 
-  const [pageInf, setPageInf] = useState<pageInfType>({ limit: '10', offset: '0' });
+  const [pageInf, setPageInf] = useState<pageInfType>({ limit: '10', offset });
   const changePage = useCallback((pageInf: pageInfType) => {
     setPageInf(pageInf);
   }, []);
