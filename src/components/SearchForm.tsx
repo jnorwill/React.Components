@@ -48,16 +48,17 @@ const SearchForm: React.FC<SearchProps> = ({ create }) => {
     <div className="search">
       <form className="form" onSubmit={submit}>
         <input
-          className="input"
+          className="search__input"
           type="text"
           value={searchValue}
+          placeholder="find the pokemon"
           onChange={(event) => {
             const value = event?.target?.value || '';
             localStorage.setItem('searchValue', value);
             setSearchValue(value);
           }}
         />
-        <input type="submit" />
+        <input className="submit" type="submit" />
       </form>
     </div>
   );

@@ -7,12 +7,12 @@
 
 .search,
 .output {
+  padding: 50px;
   width: 100vw;
   box-sizing: border-box;
 }
 
 .search {
-  padding: 50px;
   background-color: rgb(255, 201, 201);
   display: flex;
   align-items: center;
@@ -22,19 +22,80 @@
 .form {
   display: flex;
   width: 50%;
+  gap: 20px;
 }
 
-.input {
+.search__input {
   width: 100%;
 }
+
+.search__input,
+.pagination__input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px #7b966a dotted;
+  color: #7b966a;
+  outline: none;
+  font-weight: 900;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.pagination__text {
+  width: 124px;
+  font-weight: 900;
+  color: #7b966a;
+  font-size: 12px;
+  margin: 10px;
+}
+
+.pagination__input {
+  width: 30px;
+  text-align: center;
+}
+
+.submit,
+.pagination__button {
+  border-radius: 8px;
+  border: 2px solid rgb(255, 250, 153);
+  padding: 5px 10px;
+  font-weight: 900;
+  font-family: inherit;
+  background-color: rgb(255, 250, 153);
+  cursor: pointer;
+  transition: 0.25s;
+  color: #7b966a;
+
+  &:hover {
+    border: 2px solid #7b966a;
+  }
+
+  &:focus,
+  &:focus-visible {
+    border: 2px solid #7b966a;
+  }
+}
+
 
 .output {
   flex-grow: 1;
   background-color: rgb(230, 204, 255);
 }
 
-.element {
+
+.pokemon {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #7b966a;
+}
+
+.pokemon__name {
+  text-transform: capitalize;
+
 }

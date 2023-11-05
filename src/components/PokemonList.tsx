@@ -9,12 +9,12 @@ interface PokemonListType {
   url: string;
 }
 
-const PokemonList = () => {
+const PokemonList = ({ ...props }) => {
   const [output, setOutput] = useState<OutputType[]>([]);
 
   useEffect(() => {
     const fetchPokemonList = async () => {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=20&offset=0`, {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${props.limit}&offset=${props.offset}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
@@ -40,15 +40,15 @@ const PokemonList = () => {
         }),
       );
 
-      setOutput([...output, ...newOutput]);
+      setOutput([...newOutput]);
     };
     fetchPokemonList();
-  }, []);
+  }, [props.limit, props.offset]);
 
   return (
     <div>
       {output.map((item: OutputType) => {
-        return <Pokemon key={item.img} img={item.img} title={item.title} />;
+        return <Pokemon key={item.title} img={item.img} title={item.title} />;
       })}
     </div>
   );
