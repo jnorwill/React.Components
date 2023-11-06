@@ -1,0 +1,157 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+}
+
+.search,
+.output {
+  padding: 50px;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+.search {
+  background-color: #ffc9c9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  display: flex;
+  width: 50%;
+  gap: 20px;
+}
+
+.search__input {
+  width: 100%;
+}
+
+.search__input,
+.limit__input,
+.pagination__input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px #7b966a dotted;
+  color: #7b966a;
+  outline: none;
+  font-weight: 900;
+}
+
+
+.limit__text {
+  font-weight: 900;
+  color: #7b966a;
+  font-size: 12px;
+}
+
+
+.limit,
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 50%;
+  margin: 0 auto;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.limit {
+  padding-bottom: 10px;
+}
+
+.pagination {
+  padding-top: 10px;
+}
+
+.limit__input,
+.pagination__input {
+  width: 30px;
+  text-align: center;
+}
+
+.sidebar__button,
+.pokemon__button,
+.search__submit,
+.limit__submit,
+.pagination__button {
+  border-radius: 8px;
+  border: 2px solid #fffa99;
+  padding: 5px 10px;
+  font-weight: 900;
+  font-family: inherit;
+  background-color: #fffa99;
+  cursor: pointer;
+  transition: 0.25s;
+  color: #7b966a;
+
+  &:hover {
+    border: 2px solid #7b966a;
+  }
+
+  &:focus,
+  &:focus-visible {
+    border: 2px solid #7b966a;
+  }
+}
+
+.sidebar__button {
+  background-color: #ffc9c9;
+  align-self: flex-end;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  gap: 20px;
+}
+
+.output {
+  flex-grow: 1;
+  background-color: #ffffff;
+}
+
+.pokemon__list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pokemon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  color: #7b966a;
+  position: relative;
+  background-color: #ffc9c9;
+  border-radius: 12px;
+  padding: 20px;
+  max-height: 100px;
+}
+
+.pokemon__name {
+  text-transform: capitalize;
+
+}
+
+.sidebar {
+  width: 200px;
+  color: #7b966a;
+  border-radius: 12px;
+  padding: 20px;
+  z-index: 1;
+  background: #fffa99;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  overflow: auto;
+
+}
