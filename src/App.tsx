@@ -26,7 +26,7 @@ const App = () => {
   };
 
   const [searchParams] = useSearchParams();
-  const offset = `${+(searchParams.get('page') || '') * 10 - 10}`;
+  const offset = `${(+(searchParams.get('page') || '') * 10 || 10) - 10}`;
 
   const [pageInf, setPageInf] = useState<pageInfType>({ limit: '10', offset });
   const changePage = useCallback((pageInf: pageInfType) => {
