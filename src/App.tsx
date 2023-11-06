@@ -35,7 +35,7 @@ const App = () => {
 
   const closeMore = () => {
     if (searchParams.get('details')) {
-      setSearchParams({ page: searchParams.get('page') || '' });
+      setSearchParams({ page: searchParams.get('page') || '1' });
     }
   };
 

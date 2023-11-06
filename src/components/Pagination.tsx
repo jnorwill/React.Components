@@ -50,9 +50,9 @@ const Pagination: React.FC<PageProps> = ({ change }) => {
         <input
           type="text"
           className="pagination__input"
-          value={searchParams.get('page') || ''}
+          value={searchParams.get('page') || '1'}
           onChange={(e) => {
-            const page = e?.target?.value;
+            const page = e?.target?.value || '1';
             setSearchParams({ page });
 
             changePage(page, limit);

@@ -51,7 +51,7 @@ const Sidebar = () => {
 
   if (!id) return null;
   const closeMore = () => {
-    setSearchParams({ page: searchParams.get('page') || '' });
+    setSearchParams({ page: searchParams.get('page') || '1' });
   };
   return (
     <>
