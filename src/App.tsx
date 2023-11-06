@@ -25,13 +25,19 @@ const App = () => {
     setPokemonInf(pokemonInf);
   };
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams({});
   const offset = `${(+(searchParams.get('page') || '') * 10 || 10) - 10}`;
 
   const [pageInf, setPageInf] = useState<pageInfType>({ limit: '10', offset });
   const changePage = useCallback((pageInf: pageInfType) => {
     setPageInf(pageInf);
   }, []);
+
+  const closeMore = () => {
+    if (searchParams.get('details')) {
+      setSearchParams({ page: searchParams.get('page') || '' });
+    }
+  };
 
   return (
     <>
@@ -44,11 +50,13 @@ const App = () => {
               path="/"
               element={
                 <div className="main">
-                  {pokemonInf ? (
-                    <Pokemon id={pokemonInf.id} img={pokemonInf.img} title={pokemonInf.title} />
-                  ) : (
-                    <PokemonList limit={pageInf.limit} offset={pageInf.offset} />
-                  )}
+                  <div onClick={() => closeMore()}>
+                    {pokemonInf ? (
+                      <Pokemon id={pokemonInf.id} img={pokemonInf.img} title={pokemonInf.title} />
+                    ) : (
+                      <PokemonList limit={pageInf.limit} offset={pageInf.offset} />
+                    )}
+                  </div>
                   <Sidebar />
                 </div>
               }
