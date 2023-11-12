@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import Pokemon from './Pokemon.tsx';
