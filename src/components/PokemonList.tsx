@@ -1,62 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
 import Pokemon from './Pokemon.tsx';
+
+import PokemonInfoContext from '../contexts/PokemonInfoContext';
+import usePokemonList from '../hooks/usePokemonList';
+
 interface OutputType {
   id: number;
   img: string;
   title: string;
 }
-type PokemonListType = {
-  name: string;
-  url: string;
-};
-type ResponseListType = {
-  results: PokemonListType[];
-};
-type ResponseType = {
-  id: number;
-  sprites: { front_default: string };
-  name: string;
-};
 
-const PokemonList = ({ limit, offset }: { limit: string; offset: string }) => {
-  const [output, setOutput] = useState<OutputType[]>([]);
+const PokemonList = () => {
+  const pageInfContext = useContext(PokemonInfoContext);
+  usePokemonList();
 
-  useEffect(() => {
-    const fetchPokemonList = async () => {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-        },
-      });
-
-      const resultList: ResponseListType = await response.json();
-      const newOutput: OutputType[] = await Promise.all(
-        resultList.results.map(async (item: PokemonListType) => {
-          const response = await fetch(`${item.url}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json;charset=utf-8',
-            },
-          });
-
-          const result: ResponseType = await response.json();
-          return {
-            id: result.id,
-            img: result.sprites.front_default,
-            title: result.name,
-          };
-        }),
-      );
-
-      setOutput([...newOutput]);
-    };
-    fetchPokemonList();
-  }, [limit, offset]);
+  const [searchParams, setSearchParams] = useSearchParams({});
+  const closeMore = () => {
+    if (searchParams.get('details')) {
+      setSearchParams({ page: searchParams.get('page') || '1' });
+    }
+  };
 
   return (
-    <div className="pokemon__list">
-      {output.map((item: OutputType) => {
+    <div className="pokemon__list" onClick={() => closeMore()}>
+      {pageInfContext.pokemonList?.map((item: OutputType) => {
         return <Pokemon key={item.id} id={item.id} img={item.img} title={item.title} />;
       })}
     </div>

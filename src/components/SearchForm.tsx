@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import PokemonInfoContext from '../contexts/PokemonInfoContext';
 type OutputType = {
   id: number;
   img: string;
@@ -9,11 +10,9 @@ type ResponseType = {
   sprites: { front_default: string };
   name: string;
 };
-type SearchProps = {
-  create: (outputInf: OutputType | null) => void;
-};
 
-const SearchForm: React.FC<SearchProps> = ({ create }) => {
+const SearchForm = () => {
+  const pokemonInfoContext = useContext(PokemonInfoContext);
   const [searchValue, setSearchValue] = useState('');
 
   const searchResponse: (value: string) => Promise<OutputType> = async (value: string) => {
@@ -36,9 +35,10 @@ const SearchForm: React.FC<SearchProps> = ({ create }) => {
     if (searchValue) {
       pokemonInf = await searchResponse(searchValue);
     } else pokemonInf = null;
-    create(pokemonInf);
-  };
 
+    if (pokemonInfoContext.setSearch) pokemonInfoContext.setSearch(!!searchValue);
+    if (pokemonInfoContext.setPokemonList && pokemonInf) pokemonInfoContext.setPokemonList([pokemonInf]);
+  };
   useEffect(() => {
     search(searchValue);
   }, []);
