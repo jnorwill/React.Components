@@ -1,8 +1,9 @@
 import { useEffect, useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import PokemonInfoContext from '../contexts/PokemonInfoContext'
 import type { StoreType } from './../store'
+import { savePokemonList } from './../store/pokemonListSlice';
 
 interface OutputType {
   id: number;
@@ -25,8 +26,8 @@ type ResponseType = {
 const usePokemonList = () => {
   const pageInfContext = useContext(PokemonInfoContext);
   const { limit, offset } = pageInfContext.pageInf || {}
-  const pokemonInfoContext = useContext(PokemonInfoContext);
   const searchValue = useSelector((state: StoreType) => state.search.value);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchPokemonList = async () => {
@@ -56,8 +57,7 @@ const usePokemonList = () => {
         }),
       );
 
-      if (pokemonInfoContext.setPokemonList) pokemonInfoContext.setPokemonList([...newOutput])
-
+      dispatch(savePokemonList([...newOutput]))
     };
 
     if (!searchValue.trim()) fetchPokemonList();

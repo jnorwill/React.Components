@@ -1,7 +1,7 @@
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveSearchValue } from './../store/searchSlice';
-import PokemonInfoContext from '../contexts/PokemonInfoContext';
+import { savePokemonList } from './../store/pokemonListSlice';
 import type { StoreType } from './../store';
 
 type ResponseType = {
@@ -11,7 +11,6 @@ type ResponseType = {
 };
 
 const SearchForm = () => {
-  const pokemonInfoContext = useContext(PokemonInfoContext);
   const searchValue = useSelector((state: StoreType) => state.search.value);
   const dispatch = useDispatch();
 
@@ -37,7 +36,7 @@ const SearchForm = () => {
     } else pokemonInf = null;
 
     dispatch(saveSearchValue(searchValue));
-    if (pokemonInfoContext.setPokemonList && pokemonInf) pokemonInfoContext.setPokemonList([pokemonInf]);
+    if (pokemonInf) dispatch(savePokemonList([pokemonInf]));
   };
   useEffect(() => {
     search(searchValue);
