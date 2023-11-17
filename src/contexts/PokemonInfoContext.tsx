@@ -11,15 +11,11 @@ type pageInfType = {
 };
 
 const PokemonInfoContext = createContext<{
-  search: boolean;
-  setSearch: ((search: boolean) => void) | null;
   pokemonList: OutputType[] | null;
   setPokemonList: ((outputInf: OutputType[]) => void) | null;
   pageInf: pageInfType | null;
   setPageInf: ((outputInf: pageInfType) => void) | null;
 }>({
-  setSearch: null,
-  search: false,
   pokemonList: null,
   setPokemonList: null,
   pageInf: null,

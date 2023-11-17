@@ -1,11 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
+const storedSearchValue = localStorage.getItem('searchValue') || '';
+
+export type StoreType = {
+    value: string
+}
 
 const searchSlice = createSlice({
     name: 'search',
-    initialState: { value: '' },
+    initialState: { value: storedSearchValue },
     reducers: {
         saveSearchValue: (state, action) => {
-
+            state.value = action.payload
         },
     },
 });

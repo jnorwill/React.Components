@@ -13,7 +13,6 @@ type pageInfType = {
 };
 
 const PokemonInfoProvider = ({ children }: { children: React.ReactNode }) => {
-  const [search, setSearch] = useState<boolean>(false);
   const [pokemonList, setPokemonList] = useState<OutputType[] | null>(null);
 
   const [searchParams] = useSearchParams({});
@@ -23,8 +22,6 @@ const PokemonInfoProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <PokemonInfoContext.Provider
       value={{
-        search,
-        setSearch,
         pokemonList,
         setPokemonList,
         pageInf,

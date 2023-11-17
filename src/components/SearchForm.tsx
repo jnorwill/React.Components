@@ -1,10 +1,9 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { saveSearchValue } from './../store/searchSlice';
 import PokemonInfoContext from '../contexts/PokemonInfoContext';
-type OutputType = {
-  id: number;
-  img: string;
-  title: string;
-};
+import type { StoreType } from './../store';
+
 type ResponseType = {
   id: number;
   sprites: { front_default: string };
@@ -13,9 +12,10 @@ type ResponseType = {
 
 const SearchForm = () => {
   const pokemonInfoContext = useContext(PokemonInfoContext);
-  const [searchValue, setSearchValue] = useState('');
+  const searchValue = useSelector((state: StoreType) => state.search.value);
+  const dispatch = useDispatch();
 
-  const searchResponse: (value: string) => Promise<OutputType> = async (value: string) => {
+  async function searchResponse(value: string) {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${value}`, {
       method: 'GET',
       headers: {
@@ -28,7 +28,7 @@ const SearchForm = () => {
       img: result.sprites.front_default,
       title: result.name,
     };
-  };
+  }
 
   const search = async (searchValue: string) => {
     let pokemonInf;
@@ -36,7 +36,7 @@ const SearchForm = () => {
       pokemonInf = await searchResponse(searchValue);
     } else pokemonInf = null;
 
-    if (pokemonInfoContext.setSearch) pokemonInfoContext.setSearch(!!searchValue);
+    dispatch(saveSearchValue(searchValue));
     if (pokemonInfoContext.setPokemonList && pokemonInf) pokemonInfoContext.setPokemonList([pokemonInf]);
   };
   useEffect(() => {
@@ -47,19 +47,22 @@ const SearchForm = () => {
     event.preventDefault();
     await search(searchValue);
   };
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let value = event?.target?.value || '';
+    value = value.toLocaleLowerCase();
+    localStorage.setItem('searchValue', value);
+    dispatch(saveSearchValue(value));
+  };
 
   return (
     <div className="search">
       <form className="form" onSubmit={submit}>
         <input
+          value={searchValue}
           className="search__input"
           type="text"
           placeholder="find the pokemon"
-          onChange={(event) => {
-            let value = event?.target?.value || '';
-            value = value.toLocaleLowerCase();
-            setSearchValue(value);
-          }}
+          onChange={(e) => onChange(e)}
         />
         <input className="search__submit" type="submit" value="Search" />
       </form>
